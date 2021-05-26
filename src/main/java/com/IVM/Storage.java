@@ -1,6 +1,5 @@
 package com.IVM;
 
-public class Storage
-{
+public class Storage {
 
 }
