@@ -1,6 +1,7 @@
 package com.IVM;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class VendingMachine
@@ -23,16 +24,30 @@ public class VendingMachine
         snack.addItem(amount);
     }
 
+    public void purchase(String name, Date date) throws IVMException {
+        var snack = categories.get(name);
+        if (snack == null) {
+            throw new IVMException("Snack category '" + name + "' was not found");
+        }
+        if (snack.purchase()) {
+            //TODO: Record the purchase
+            return;
+        } else {
+            throw new IVMException("Snack category '" + name + "' is empty");
+        }
+    }
+
     public ArrayList<SnackCategory> list() {
         ArrayList<SnackCategory> snacks = new ArrayList<>(categories.values());
-        return new ArrayList<>(); //TODO
+        snacks.sort((a, b) -> a.getAmount() - b.getAmount());
+        return snacks;
     }
 
     public void clear() {
         //TODO
     }
 
-    public void report(int year, int month){
+    public void report(int year, int month) {
         //TODO
     }
 

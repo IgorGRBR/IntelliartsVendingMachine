@@ -1,15 +1,15 @@
+com/IVM/Storage.java
+ com.IVM.Storage
+com/IVM/IVMException.java
+ com.IVM.IVMException
+com/IVM/App.java
+ com.IVM.App
 com/IVM/Command.java
  com.IVM.Command
  com.IVM.IVMConsumer
-com/IVM/IVMException.java
- com.IVM.IVMException
-com/IVM/SnackCategory.java
- com.IVM.SnackCategory
-com/IVM/Storage.java
- com.IVM.Storage
 com/IVM/VendingMachine.java
  com.IVM.VendingMachine
+com/IVM/SnackCategory.java
+ com.IVM.SnackCategory
 com/IVM/Main.java
  com.IVM.Main
-com/IVM/App.java
- com.IVM.App

@@ -3,7 +3,7 @@ package com.IVM;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class App
+public class CLI
 {
     private String app_name;
     private Map<String, Command> commands;
@@ -11,7 +11,7 @@ public class App
     private Consumer<String[]> on_start;
     private Consumer<String[]> on_stop;
 
-    public App(String name) {
+    public CLI(String name) {
         app_name = name;
         commands = new HashMap<>();
         running = false;

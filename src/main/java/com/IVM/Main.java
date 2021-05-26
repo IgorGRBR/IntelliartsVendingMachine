@@ -4,10 +4,9 @@ public class Main
 {
     public static void main(String[] args)
     {
-        System.out.println("Hello world!");
         var vmachine = new VendingMachine();
-        var app = new App("vending machine");
-        app.registerCommand("help", cargs -> {
+        var cli = new CLI("vending machine");
+        cli.registerCommand("help", cargs -> {
             System.out.println("Commands:");
             System.out.println("help - prints this message.");
             System.out.println("exit - stops the program.");
@@ -19,8 +18,8 @@ public class Main
             System.out.println("report <YYYY-MM> - show earnings by category in specified month.");
             System.out.println("report <YYYY-MM-DD> - show earnings by category gained since provided date till now sorted by category name.");
         });
-        app.registerCommand("exit", cargs -> app.stop());
-        app.registerCommand("addCategory", cargs -> {
+        cli.registerCommand("exit", cargs -> cli.stop());
+        cli.registerCommand("addCategory", cargs -> {
             String name = cargs[0];
             int price, amount = 0;
             price = (int)(Float.parseFloat(cargs[1]) * 100);
@@ -28,14 +27,20 @@ public class Main
                 amount = Integer.parseInt(cargs[2]);
             }
             vmachine.addCategory(name, price, amount);
-            System.out.println("YES");
         }, 2, 3);
-        app.registerCommand("addItem", cargs -> {
+        cli.registerCommand("addItem", cargs -> {
             String name = cargs[0];
             int amount = Integer.parseInt(cargs[1]);
             vmachine.addItem(name, amount);
-            System.out.println("Succ");
         }, 2);
-        app.run();
+        cli.registerCommand("list", cargs -> {
+            var snacks = vmachine.list();
+            System.out.println("[ Category\t | Amount\t | Price ]");
+            for (var snack : snacks) {
+                System.out.println("  " + snack.getName() + "\t\t | " + snack.getAmount() + "\t\t | " + snack.getPriceStr());
+            }
+        });
+        cli.registerCommand("clear", cargs -> vmachine.clear());
+        cli.run();
     }
 }

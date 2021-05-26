@@ -18,7 +18,7 @@ public class SnackCategory {
 
     public String getName() { return name; }
     public int getPrice() { return price; }
-    public String getPriceStr() { return String.valueOf(price/100); }
+    public String getPriceStr() { return String.valueOf((float)price/100.0f); }
 
     public void addItem(Integer amt) { amount += amt; }
     public int getAmount() { return amount; }
