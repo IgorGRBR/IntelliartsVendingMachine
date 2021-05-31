@@ -7,9 +7,11 @@ import java.util.HashMap;
 public class VendingMachine
 {
     private HashMap<String, SnackCategory> categories;
+    private ArrayList<Record> purchases;
 
     public VendingMachine() {
         categories = new HashMap<>();
+        purchases = new ArrayList<>();
     }
 
     public void addCategory(String name, int price, int amount) {
@@ -30,7 +32,7 @@ public class VendingMachine
             throw new IVMException("Snack category '" + name + "' was not found");
         }
         if (snack.purchase()) {
-            //TODO: Record the purchase
+            purchases.add(new Record(date, snack));
             return;
         } else {
             throw new IVMException("Snack category '" + name + "' is empty");

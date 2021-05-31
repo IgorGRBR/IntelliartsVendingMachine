@@ -7,7 +7,8 @@ import java.util.Date;
 public class Record {
     private Date date;
     private SnackCategory category;
-    public final DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+    public static final DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+    public static final DateFormat date_format_ym = new SimpleDateFormat("yyyy-MM");
 
     public Record(Date _date, SnackCategory snack) {
         date = _date;

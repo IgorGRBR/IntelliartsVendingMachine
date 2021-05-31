@@ -1,5 +1,8 @@
 package com.IVM;
 
+import java.text.ParseException;
+import java.util.Date;
+
 public class Main
 {
     public static void main(String[] args)
@@ -23,16 +26,16 @@ public class Main
             String name = cargs[0];
             int price, amount = 0;
             price = (int)(Float.parseFloat(cargs[1]) * 100);
-            if (cargs.length > 2) {
+            if (cargs[2] != null) {
                 amount = Integer.parseInt(cargs[2]);
             }
             vmachine.addCategory(name, price, amount);
-        }, 2, 3);
+        }, new String[] {CLI.STRING, CLI.DECIMAL, CLI.DECIMAL_OPT});
         cli.registerCommand("addItem", cargs -> {
             String name = cargs[0];
             int amount = Integer.parseInt(cargs[1]);
             vmachine.addItem(name, amount);
-        }, 2);
+        }, new String[] {CLI.STRING, CLI.DECIMAL});
         cli.registerCommand("list", cargs -> {
             var snacks = vmachine.list();
             System.out.println("[ Category\t | Amount\t | Price ]");
@@ -40,6 +43,27 @@ public class Main
                 System.out.println("  " + snack.getName() + "\t\t | " + snack.getAmount() + "\t\t | " + snack.getPriceStr());
             }
         });
+        cli.registerCommand("purchase", cargs -> {
+            try {
+                var date = Record.date_format.parse(cargs[1]);
+                vmachine.purchase(cargs[0], date);
+            } catch (ParseException e) {
+                throw new IVMException("Date parsing exception. Perhaps incorrect month/day numbers?");
+            }
+        }, new String[] {CLI.STRING, CLI.DATE});
+        cli.registerCommand("report", cargs -> {
+            Date date = null;
+            try {
+                date = Record.date_format.parse(cargs[0]);
+            } catch (ParseException e) {
+                try {
+                    date = Record.date_format_ym.parse(cargs[0]);
+                } catch (ParseException parseException) {
+                    throw new IVMException("Date parsing exception. Perhaps incorrect month/day numbers?");
+                }
+            }
+
+        }, new String[] {CLI.DATE_YM});
         cli.registerCommand("clear", cargs -> vmachine.clear());
         cli.run();
     }

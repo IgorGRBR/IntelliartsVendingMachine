@@ -4,25 +4,23 @@ import java.util.function.Consumer;
 
 public class Command {
     private IVMConsumer<String[]> lambda;
-    private int min_args, max_args;
+    private String[] arg_types;
 
-    public Command(IVMConsumer<String[]> consumer, int args) {
+    public Command(IVMConsumer<String[]> consumer, String[] args) {
         lambda = consumer;
-        min_args = max_args = args;
+        arg_types = args;
     }
 
-    public Command(IVMConsumer<String[]> consumer, int min, int max) {
+    public Command(IVMConsumer<String[]> consumer) {
         lambda = consumer;
-        min_args = min;
-        max_args = max;
+        arg_types = new String[0];
     }
 
     public void invoke(String[] args) throws IVMException {
-        if (args.length > max_args || args.length < min_args) {
-            throw new IVMException("Invalid amount of arguments!");
-        }
         lambda.acceptThrows(args);
     }
+
+    public String[] getArgTypes() { return arg_types; }
 }
 
 @FunctionalInterface
