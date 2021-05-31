@@ -1,6 +1,8 @@
 package com.IVM;
 
 import java.text.ParseException;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Main
@@ -52,17 +54,14 @@ public class Main
             }
         }, new String[] {CLI.STRING, CLI.DATE});
         cli.registerCommand("report", cargs -> {
-            Date date = null;
+            ArrayList<Record> report = new ArrayList<>();
             try {
-                date = Record.date_format.parse(cargs[0]);
+                Date date = Record.date_format.parse(cargs[0]);
+                vmachine.report(date);
             } catch (ParseException e) {
-                try {
-                    date = Record.date_format_ym.parse(cargs[0]);
-                } catch (ParseException parseException) {
-                    throw new IVMException("Date parsing exception. Perhaps incorrect month/day numbers?");
-                }
+                YearMonth ym = YearMonth.parse(cargs[0]);
+                vmachine.report(ym);
             }
-
         }, new String[] {CLI.DATE_YM});
         cli.registerCommand("clear", cargs -> vmachine.clear());
         cli.run();

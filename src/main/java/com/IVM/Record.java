@@ -17,4 +17,6 @@ public class Record {
 
     public String getSnackName() { return category.getName(); }
     public String getDateStr() { return date_format.format(date); }
+    public Date getDate() { return date; }
+    public SnackCategory getCategory() { return category; }
 }
